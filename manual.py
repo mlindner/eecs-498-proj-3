@@ -24,12 +24,6 @@ class Controller( JoyApp ):
         'slider4': (127, MOTOR_RIGHT_TOP),
     }
 
-    # Stored values for all event types to be summed for resultant motor speed
-    values = [
-        {key: 0 for key in events},
-        {key: 0 for key in events},
-    ]
-
     def __init__(self, spec, *arg, **kw):
         JoyApp.__init__(self, *arg, **kw)
         self.spec = spec
