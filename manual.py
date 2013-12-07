@@ -47,8 +47,6 @@ class Controller( JoyApp ):
             kind = evt.kind + str(evt.index)
             # Try in case we got an event we havent set
             try:
-                print(kind)
-                print(self.events[kind])
                 params = self.events[kind]
             except KeyError:
                 return JoyApp.onEvent(self, evt)
