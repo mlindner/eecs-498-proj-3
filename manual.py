@@ -1,8 +1,6 @@
 from time import sleep
 from joy import *
 
-sleep(0.5)
-
 class Controller( JoyApp ):
     MOTOR_LEFT_BOTTOM = 1
     MOTOR_LEFT_TOP = 2
