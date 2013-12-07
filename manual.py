@@ -4,8 +4,12 @@ from joy import *
 class Controller( JoyApp ):
     MOTOR_LEFT_BOTTOM = 0
     MOTOR_LEFT_TOP = 1
-    MOTOR_RIGHT_BOTTOM = 3
-    MOTOR_RIGHT_TOP = 2
+    MOTOR_RIGHT_BOTTOM = 2
+    MOTOR_RIGHT_TOP = 3
+
+    MIN_ANGLE = 196
+    MAX_ANGLE = 826
+    ANGLE_RANGE = MAX_ANGLE - MIN_ANGLE
 
     # Events names generated from the concatenation of event kind + event index
     # The format is:
@@ -36,9 +40,9 @@ class Controller( JoyApp ):
         for motor in self.motors:
             motor.set_mode(0)
             # Set min angle = 0
-            motor.pna.mem_write_fast(motor.mcu.cw_angle_limit, 0)
+            motor.pna.mem_write_fast(motor.mcu.cw_angle_limit, self.MIN_ANGLE)
             # Set max angle = 1023
-            motor.pna.mem_write_fast(motor.mcu.ccw_angle_limit, 1023)
+            motor.pna.mem_write_fast(motor.mcu.ccw_angle_limit, self.MAX_ANGLE)
 
     def onEvent(self, evt):
         # We only care about midi events right now
@@ -52,7 +56,7 @@ class Controller( JoyApp ):
                 return JoyApp.onEvent(self, evt)
 
             # Computation the new motor input
-            position = (evt.value * 1023) / params[0]
+            position = (evt.value * self.ANGLE_RANGE) / params[0] + MIN_ANGLE
 
             # Set motor position
             motor = self.motors[params[1]]
