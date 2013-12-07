@@ -62,5 +62,6 @@ class Controller( JoyApp ):
             motor = self.motors[params[1]]
             motor.pna.mem_write_fast(motor.mcu.goal_position, position)
 
-app = Controller("#output ", robot=dict(count=4)
-app.run()
+if __name__ == '__main__':
+    app = Controller("#output ", robot=dict(count=4))
+    app.run()
