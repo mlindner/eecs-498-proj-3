@@ -2,10 +2,10 @@ from time import sleep
 from joy import *
 
 class Controller( JoyApp ):
-    MOTOR_LEFT_BOTTOM = 1
-    MOTOR_LEFT_TOP = 2
-    MOTOR_RIGHT_BOTTOM = 3
-    MOTOR_RIGHT_TOP = 4
+    MOTOR_LEFT_BOTTOM = 0
+    MOTOR_LEFT_TOP = 1
+    MOTOR_RIGHT_BOTTOM = 2
+    MOTOR_RIGHT_TOP = 3
 
     # Events names generated from the concatenation of event kind + event index
     # The format is:
@@ -57,6 +57,7 @@ class Controller( JoyApp ):
             position = (evt.value * 1023) / params[0]
 
             # Set motor position
+            print params[1]
             motor = self.motors[params[1]]
             motor.pna.mem_write_fast(motor.mcu.goal_position, position)
 
