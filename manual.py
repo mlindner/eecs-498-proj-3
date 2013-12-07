@@ -2,18 +2,21 @@ from time import sleep
 from joy import *
 
 class Controller( JoyApp ):
+
+    # Mapping motor positions to numeric values
     MOTOR_LEFT_BOTTOM = 0
     MOTOR_LEFT_TOP = 1
     MOTOR_RIGHT_BOTTOM = 2
     MOTOR_RIGHT_TOP = 3
 
+    # Max and min angles motors allowed to rotate through
     MIN_ANGLE = 196
     MAX_ANGLE = 826
     ANGLE_RANGE = MAX_ANGLE - MIN_ANGLE
 
     # Events names generated from the concatenation of event kind + event index
     # The format is:
-    # 'eventname': (sensor_max_value, motor_number)
+    # 'eventname': (sensor_max_value, motor_location)
     events = {
         'slider1': (127, MOTOR_LEFT_BOTTOM),
         'slider2': (127, MOTOR_LEFT_TOP),
@@ -39,9 +42,8 @@ class Controller( JoyApp ):
 
         for motor in self.motors:
             motor.set_mode(0)
-            # Set min angle = 0
+            # Set min and max angle
             motor.pna.mem_write_fast(motor.mcu.cw_angle_limit, self.MIN_ANGLE)
-            # Set max angle = 1023
             motor.pna.mem_write_fast(motor.mcu.ccw_angle_limit, self.MAX_ANGLE)
 
     def onEvent(self, evt):
