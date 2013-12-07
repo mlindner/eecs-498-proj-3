@@ -56,7 +56,7 @@ class Controller( JoyApp ):
                 return JoyApp.onEvent(self, evt)
 
             # Computation the new motor input
-            position = (evt.value * self.ANGLE_RANGE) / params[0] + MIN_ANGLE
+            position = (evt.value * self.ANGLE_RANGE) / params[0] + self.MIN_ANGLE
 
             # Set motor position
             motor = self.motors[params[1]]
