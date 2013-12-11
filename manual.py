@@ -20,12 +20,12 @@ class Controller( JoyApp ):
     # back motors 511
     # repeat
     gait = [[0, 185], [1, 290], [0, 511], [1,511]]
-    current_gait_left = 0
-    current_gait_right = 0
-    left_delay = 100000
-    right_delay = 100000
-    last_event_left = 0
-    last_event_right = 0
+    current_gait_left = 0.0
+    current_gait_right = 0.0
+    left_delay = 1
+    right_delay = 1
+    last_event_left = 0.0
+    last_event_right = 0.0
 
 
     # Events names generated from the concatenation of event kind + event index
@@ -64,7 +64,7 @@ class Controller( JoyApp ):
             except KeyError:
                 return JoyApp.onEvent(self, evt)
 
-            delay = (params[0] - evt.value) * 100000 / params[0]
+            delay = float((params[0] - evt.value)) / params[0]
             if kind == 'slider1':
                 self.left_delay = delay
             if kind == 'slider2':
