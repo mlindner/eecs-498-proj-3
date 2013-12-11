@@ -4,10 +4,10 @@ from joy import *
 class Controller( JoyApp ):
 
     # Mapping motor positions to numeric values
-    MOTOR_LEFT_FRONT = 2
+    MOTOR_LEFT_FRONT = 3
     MOTOR_LEFT_BACK = 1
     MOTOR_RIGHT_FRONT = 0
-    MOTOR_RIGHT_BACK = 3
+    MOTOR_RIGHT_BACK = 2
 
     # Max and min angles motors allowed to rotate through
     MIN_ANGLE = 196
