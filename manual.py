@@ -77,7 +77,7 @@ class Controller( JoyApp ):
             #motor = self.motors[params[1]]
             #motor.pna.mem_write_fast(motor.mcu.goal_position, position)
         else:
-            if self.now + self.left_event_delay > self.last_event_left:
+            if self.now + self.left_delay > self.last_event_left:
                 gait_elem = self.gait[current_gait_left]
                 motor_num = self.events['slider1'][1][gait_elem[0]]
                 motor = self.motors[motor_num]
@@ -85,7 +85,7 @@ class Controller( JoyApp ):
                 current_gait_left = current_gait_left + 1
                 self.last_event_left = self.now
 
-            if self.now + self.right_event_delay > self.last_event_right:
+            if self.now + self.right_delay > self.last_event_right:
                 gait_elem = self.gait[current_gait_right]
                 motor_num = self.events['slider2'][1][gait_elem[0]]
                 motor = self.motors[motor_num]
