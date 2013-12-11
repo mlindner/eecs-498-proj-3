@@ -4,15 +4,18 @@ from joy import *
 class Controller( JoyApp ):
 
     # Mapping motor positions to numeric values
-    MOTOR_LEFT_BOTTOM = 0
-    MOTOR_LEFT_TOP = 1
-    MOTOR_RIGHT_BOTTOM = 2
-    MOTOR_RIGHT_TOP = 3
+    MOTOR_LEFT_BOTTOM = 2
+    MOTOR_LEFT_TOP = 3
+    MOTOR_RIGHT_BOTTOM = 0
+    MOTOR_RIGHT_TOP = 1
 
     # Max and min angles motors allowed to rotate through
     MIN_ANGLE = 196
     MAX_ANGLE = 826
     ANGLE_RANGE = MAX_ANGLE - MIN_ANGLE
+
+    # tip motors 185
+
 
     # Events names generated from the concatenation of event kind + event index
     # The format is:
