@@ -5,8 +5,8 @@ class Controller( JoyApp ):
 
     # Mapping motor positions to numeric values
     MOTOR_LEFT_FRONT = 3
-    MOTOR_LEFT_BACK = 0
-    MOTOR_RIGHT_FRONT = 1
+    MOTOR_LEFT_BACK = 1
+    MOTOR_RIGHT_FRONT = 0
     MOTOR_RIGHT_BACK = 2
 
     # Max and min angles motors allowed to rotate through
