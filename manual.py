@@ -1,4 +1,5 @@
 from time import sleep
+from joy import *
 
 class Controller( JoyApp ):
 
