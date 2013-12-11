@@ -1,5 +1,4 @@
 from time import sleep
-from joy import *
 
 class Controller( JoyApp ):
 
@@ -15,16 +14,25 @@ class Controller( JoyApp ):
     ANGLE_RANGE = MAX_ANGLE - MIN_ANGLE
 
     # tip motors 185
+    # back motors 290
+    # tip motors 511
+    # back motors 511
+    # repeat
+    gait = [[0, 185], [1, 290], [0, 511], [1,511]]
+    current_gait_left = 0
+    current_gait_right = 0
+    left_delay = 100000
+    right_delay = 100000
+    last_event_left = 0
+    last_event_right = 0
 
 
     # Events names generated from the concatenation of event kind + event index
     # The format is:
     # 'eventname': (sensor_max_value, motor_location)
     events = {
-        'slider1': (127, MOTOR_LEFT_FRONT),
-        'slider2': (127, MOTOR_LEFT_BACK),
-        'slider3': (127, MOTOR_RIGHT_BACK),
-        'slider4': (127, MOTOR_RIGHT_FRONT),
+        'slider1': (127, (MOTOR_LEFT_FRONT, MOTOR_LEFT_BACK)),
+        'slider2': (127, (MOTOR_RIGHT_FRONT, MOTOR_RIGHT_BACK)),
     }
 
     def __init__(self, spec, *arg, **kw):
@@ -42,6 +50,7 @@ class Controller( JoyApp ):
             # Set min and max angle
             motor.pna.mem_write_fast(motor.mcu.cw_angle_limit, self.MIN_ANGLE)
             motor.pna.mem_write_fast(motor.mcu.ccw_angle_limit, self.MAX_ANGLE)
+            motor.pna.mem_write_fast(motor.mcu.goal_position, 511)
 
     def onEvent(self, evt):
         # We only care about midi events right now
@@ -54,12 +63,37 @@ class Controller( JoyApp ):
             except KeyError:
                 return JoyApp.onEvent(self, evt)
 
-            # Computation the new motor input
-            position = (evt.value * self.ANGLE_RANGE) / params[0] + self.MIN_ANGLE
+            delay = (params[0] - evt.value) * 100000 / params[0]
+            if kind == 'slider1':
+                self.left_delay = delay
+            if kind == 'slider2':
+                self.right_delay = delay
+
+            # Computation of event time
+            #position = (evt.value * self.ANGLE_RANGE) / params[0] + self.MIN_ANGLE
 
             # Set motor position
-            motor = self.motors[params[1]]
-            motor.pna.mem_write_fast(motor.mcu.goal_position, position)
+            #motor = self.motors[params[1]]
+            #motor.pna.mem_write_fast(motor.mcu.goal_position, position)
+        else:
+            if self.now + self.left_event_delay > self.last_event_left:
+                gait_elem = self.gait[current_gait_left]
+                motor_num = self.events['slider1'][1][gait_elem[0]]
+                motor = self.motors[motor_num]
+                motor.pna.mem_write_fast(motor.mcu.goal_position, gait_elem[1])
+                current_gait_left = current_gait_left + 1
+                self.last_event_left = self.now
+
+            if self.now + self.right_event_delay > self.last_event_right:
+                gait_elem = self.gait[current_gait_right]
+                motor_num = self.events['slider2'][1][gait_elem[0]]
+                motor = self.motors[motor_num]
+                motor.pna.mem_write_fast(motor.mcu.goal_position, gait_elem[1])
+                current_gait_right = current_gait_right + 1
+                self.last_event_right = self.now
+                
+            
+            
 
 if __name__ == '__main__':
     app = Controller("#output ", robot=dict(count=4))
