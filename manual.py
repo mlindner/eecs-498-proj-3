@@ -4,10 +4,10 @@ from joy import *
 class Controller( JoyApp ):
 
     # Mapping motor positions to numeric values
-    MOTOR_LEFT_BOTTOM = 2
-    MOTOR_LEFT_TOP = 3
-    MOTOR_RIGHT_BOTTOM = 0
-    MOTOR_RIGHT_TOP = 1
+    MOTOR_LEFT_FRONT = 2
+    MOTOR_LEFT_BACK = 1
+    MOTOR_RIGHT_FRONT = 0
+    MOTOR_RIGHT_BACK = 3
 
     # Max and min angles motors allowed to rotate through
     MIN_ANGLE = 196
@@ -21,11 +21,11 @@ class Controller( JoyApp ):
     # The format is:
     # 'eventname': (sensor_max_value, motor_location)
     events = {
-        'slider1': (127, MOTOR_LEFT_BOTTOM),
-        'slider2': (127, MOTOR_LEFT_TOP),
-        'slider3': (127, MOTOR_RIGHT_BOTTOM),
-        'slider4': (127, MOTOR_RIGHT_TOP),
-    }
+        'slider1': (127, MOTOR_LEFT_FRONT),
+        'slider2': (127, MOTOR_LEFT_BACK),
+        'slider3': (127, MOTOR_RIGHT_BACK),
+        'slider4': (127, MOTOR_RIGHT_FRONT),
+    }MOTOR_RIGHT_BOTTOM
 
     def __init__(self, spec, *arg, **kw):
         JoyApp.__init__(self, *arg, **kw)
